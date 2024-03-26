@@ -1,0 +1,17 @@
+// spellingはAdd Words to CSpell Configurationを選択して追加する
+{
+    "ignorePaths": [
+        "vendor/**",
+        ".github/**",
+        ".vscode/**",
+        "go.mod",
+        "go.sum",
+        "Dockerfile",
+        "docker-compose.yaml"
+    ],
+    "words": [
+        "kurusugawa",
+        "kciguild",
+        "gokci"
+    ]
+}
