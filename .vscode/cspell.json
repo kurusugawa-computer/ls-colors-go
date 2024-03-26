@@ -10,9 +10,10 @@
         "docker-compose.yaml"
     ],
     "words": [
-        "kurusugawa",
-        "kciguild",
+        "Getenv",
         "gokci",
+        "kciguild",
+        "kurusugawa",
         "lscolors"
     ]
 }
