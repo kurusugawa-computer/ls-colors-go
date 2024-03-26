@@ -1,18 +1,3 @@
-# ls-colors-go
-
-ls-colors-go is a library for LS_COLORS environment variable.
-
-## Installation
-
-```console
-$ github.com/kurusugawa-computer/kciguild-ls-colors-go
-```
-
-## Usage
-
-This is a simple example to parse and print environment variable LS_COLORS.
-
-```go
 package main
 
 import (
@@ -65,4 +50,3 @@ func main() {
 		}
 	}
 }
-```
