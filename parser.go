@@ -110,9 +110,9 @@ const (
 	ps_EXTENSION
 )
 
-// ParseLS_Colors parse string as LS_COLORS environment variable.
+// ParseLS_COLORS parse string as LS_COLORS environment variable.
 // if fails, it returns *ErrorWithPosition error. error position can be got by calling Position()
-func ParseLS_Colors(s string) (*LSColors, error) {
+func ParseLS_COLORS(s string) (*LSColors, error) {
 	ret := LSColorsDefault()
 	state := ps_START
 	i := 0

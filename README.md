@@ -5,7 +5,7 @@ ls-colors-go is a library for LS_COLORS environment variable.
 ## Installation
 
 ```console
-$ github.com/kurusugawa-computer/kciguild-ls-colors-go
+$ go get -u github.com/kurusugawa-computer/ls-colors-go
 ```
 
 ## Usage
@@ -13,13 +13,14 @@ $ github.com/kurusugawa-computer/kciguild-ls-colors-go
 This is a simple example to parse and print environment variable LS_COLORS.
 
 ```go
+// example/main.go
 package main
 
 import (
 	"fmt"
 	"os"
 
-	lscolors "github.com/kurusugawa-computer/kciguild-ls-colors-go/pkg"
+	lscolors "github.com/kurusugawa-computer/ls-colors-go"
 )
 
 func printStringPointer(s *string) string {
@@ -32,7 +33,7 @@ func printStringPointer(s *string) string {
 
 func main() {
 	lsColors := os.Getenv("LS_COLORS")
-	result, err := lscolors.ParseLS_Colors(lsColors)
+	result, err := lscolors.ParseLS_COLORS(lsColors)
 	if err != nil {
 		fmt.Printf("error: %s", err.Error())
 		return
@@ -65,4 +66,32 @@ func main() {
 		}
 	}
 }
+```
+
+```console
+$ eval "$(dircolors -b)" ; go run ./example
+no: undefined
+fi: undefined
+di: 01;34
+ln: 01;36
+pi: 40;33
+so: 01;35
+bd: 40;33;01
+cd: 40;33;01
+mi: 00
+or: 40;31;01
+ex: 01;32
+do: 01;35
+su: 37;41
+sg: 30;43
+st: 37;44
+ow: 34;42
+tw: 30;42
+ca: 30;41
+mh: 00
+*.xspf: 00;36
+*.spx: 00;36
+*.opus: 00;36
+*.oga: 00;36
+# ...
 ```

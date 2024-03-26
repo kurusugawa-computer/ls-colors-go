@@ -4,7 +4,7 @@ import (
 	"fmt"
 	"os"
 
-	lscolors "github.com/kurusugawa-computer/kciguild-ls-colors-go/pkg"
+	lscolors "github.com/kurusugawa-computer/ls-colors-go"
 )
 
 func printStringPointer(s *string) string {
@@ -17,7 +17,7 @@ func printStringPointer(s *string) string {
 
 func main() {
 	lsColors := os.Getenv("LS_COLORS")
-	result, err := lscolors.ParseLS_Colors(lsColors)
+	result, err := lscolors.ParseLS_COLORS(lsColors)
 	if err != nil {
 		fmt.Printf("error: %s", err.Error())
 		return
