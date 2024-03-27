@@ -17,7 +17,7 @@ func printStringPointer(s *string) string {
 
 func main() {
 	lsColors := os.Getenv("LS_COLORS")
-	result, err := lscolors.ParseLS_COLORS(lsColors)
+	result, err := lscolors.ParseLS_COLORS(lsColors, false)
 	if err != nil {
 		fmt.Printf("error: %s", err.Error())
 		return
