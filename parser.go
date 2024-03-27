@@ -32,6 +32,7 @@ type LSColors struct {
 	MultiHardLink        *string              // mh
 	ClearToEndOfLine     *string              // cl
 	Extensions           []LSColorsExtensions // *.xxx
+	Unknowns             map[string][]string
 }
 
 func newStr(s string) *string {
@@ -62,6 +63,7 @@ func LSColorsDefault() LSColors {
 		Cap:                  nil,
 		MultiHardLink:        nil,
 		ClearToEndOfLine:     newStr("\033[K"),
+		Unknowns:             make(map[string][]string),
 	}
 }
 
@@ -110,9 +112,12 @@ const (
 	ps_EXTENSION
 )
 
-// ParseLS_COLORS parse string as LS_COLORS environment variable.
-// if fails, it returns *ErrorWithPosition error. error position can be got by calling Position()
-func ParseLS_COLORS(s string) (*LSColors, error) {
+/*
+ParseLS_COLORS parse string as LS_COLORS environment variable.
+if allowUnknown is true, it accepts unknown indicator and add to .Unknowns field.
+if fails, it returns *ErrorWithPosition error. error position can be got by calling Position()
+*/
+func ParseLS_COLORS(s string, allowUnknown bool) (*LSColors, error) {
 	ret := LSColorsDefault()
 	state := ps_START
 	i := 0
@@ -150,7 +155,7 @@ LOOP:
 			if err != nil {
 				return nil, addPosition(err, i)
 			}
-			err = setByIndicator(&ret, label, seq)
+			err = setByIndicator(&ret, label, seq, allowUnknown)
 			if err != nil {
 				return nil, addPosition(err, i-1-len(label))
 			}
@@ -206,7 +211,7 @@ LOOP:
 	return &ret, nil
 }
 
-func setByIndicator(c *LSColors, label string, value string) error {
+func setByIndicator(c *LSColors, label string, value string, allowUnknown bool) error {
 	switch label {
 	case "lc":
 		c.LeftOfColorSequence = &value
@@ -257,7 +262,11 @@ func setByIndicator(c *LSColors, label string, value string) error {
 	case "cl":
 		c.ClearToEndOfLine = &value
 	default:
-		return fmt.Errorf("unrecognized prefix: %#v", value)
+		if allowUnknown {
+			c.Unknowns[label] = append(c.Unknowns[label], value)
+		} else {
+			return fmt.Errorf("unrecognized prefix: %#v", label)
+		}
 	}
 	return nil
 }
